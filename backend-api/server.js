@@ -3,6 +3,13 @@ const cors = require('cors');
 require('dotenv').config();
 
 const { connectDB } = require('./config/database');
+
+// Registrar modelos para que Sequelize los conozca antes del sync
+require('./models/User');
+require('./models/AdminAction');
+require('./models/Election');
+require('./models/Notification');
+
 const apiRoutes = require('./routes');
 
 const PORT = process.env.PORT || 4000;

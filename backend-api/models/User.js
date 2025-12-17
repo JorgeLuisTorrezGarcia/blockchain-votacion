@@ -31,7 +31,6 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('user', 'admin'),
         allowNull: false,
         defaultValue: 'user',
-        comment: 'user = votante estándar, admin = operador con permisos sobre whitelist',
     },
     // Dirección de la billetera Web3 vinculada al usuario. CRÍTICO para el voto.
     wallet_address: {

@@ -6,9 +6,13 @@ require('dotenv').config();
  * @desc Vincula una dirección de wallet al usuario autenticado.
  */
 const linkWallet = async (req, res) => {
+    console.log('Headers recibidos:', req.headers);
+    console.log('Body recibido:', req.body);
+    
     const { wallet_address } = req.body;
 
     if (!wallet_address || typeof wallet_address !== 'string') {
+        console.log('Error: wallet_address no válido', { wallet_address, tipo: typeof wallet_address });
         return res.status(400).json({ message: 'La dirección de wallet es requerida y debe ser un string' });
     }
 
