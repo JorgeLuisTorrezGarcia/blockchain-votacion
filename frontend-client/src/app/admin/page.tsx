@@ -16,7 +16,21 @@ export default function AdminPage() {
   })
   const [loading, setLoading] = useState('')
   const [message, setMessage] = useState('')
-  const [lastElection, setLastElection] = useState<any>(null)
+  const [lastElection, setLastElection] = useState<{
+    electionId: string;
+    receipt?: {
+      transactionHash: string;
+      blockNumber: number;
+      startTime: number;
+      endTime: number;
+      options: string[];
+      initialVoters: string[];
+    };
+    queueSummary?: {
+      targetedUsers?: number;
+      unmatchedWallets?: string[];
+    };
+  } | null>(null)
   const [apiKey, setApiKey] = useState('')
 
   useEffect(() => {
@@ -76,7 +90,7 @@ export default function AdminPage() {
         initial_voters: cleanVoters,
       }
 
-      const res = await fetch('http://localhost:4000/api/admin/elections', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/elections`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

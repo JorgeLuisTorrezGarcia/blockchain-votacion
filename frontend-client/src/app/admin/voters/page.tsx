@@ -23,7 +23,7 @@ export default function AdminVotersPage() {
 
       try {
         const token = localStorage.getItem('token')
-        const res = await fetch(`http://localhost:4000/api/admin/voters?page=${page}&limit=${PAGE_LIMIT}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/voters?page=${page}&limit=${PAGE_LIMIT}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

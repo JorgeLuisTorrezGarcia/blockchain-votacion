@@ -22,7 +22,7 @@ export function useAdminAccess() {
 
     const verify = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/admin/verify', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/verify`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

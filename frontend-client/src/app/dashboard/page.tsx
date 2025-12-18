@@ -41,7 +41,7 @@ export default function DashboardPage() {
     setMessage('')
 
     try {
-      const res = await fetch('http://localhost:4000/api/users/link-wallet', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/link-wallet`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export default function DashboardPage() {
         throw new Error('Ingresa un ID de elección válido')
       }
 
-      const res = await fetch(`http://localhost:4000/api/elections/${trimmedId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/elections/${trimmedId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
 
@@ -121,7 +121,7 @@ export default function DashboardPage() {
         throw new Error('Vincula o ingresa tu wallet para verificar el estado del votante.')
       }
 
-      const res = await fetch(`http://localhost:4000/api/elections/${trimmedId}/voters/${normalizedWallet}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/elections/${trimmedId}/voters/${normalizedWallet}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
 
@@ -142,7 +142,7 @@ export default function DashboardPage() {
     setMessage('')
 
     try {
-      const res = await fetch(`http://localhost:4000/api/elections/${electionId}/vote`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/elections/${electionId}/vote`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
