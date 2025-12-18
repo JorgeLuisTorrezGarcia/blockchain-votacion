@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
-        dialect: process.env.DB_DIALECT,
+        dialect: "postgres",
+        dialectModule: pg,
         logging: false // Deshabilita la impresión de consultas SQL en consola
     }
 );
