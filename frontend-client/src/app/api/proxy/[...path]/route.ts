@@ -1,14 +1,19 @@
 'use server'
 
+import { NextRequest } from 'next/server'
+
 const DEFAULT_TARGET = 'http://172.200.210.225:4000/api'
 
 const backendBaseUrl =
   process.env.BACKEND_API_BASE_URL?.replace(/\/$/, '') ?? DEFAULT_TARGET
 
-async function proxyRequest(request: Request, params: { path?: string[] }) {
-  const path = params.path?.join('/') ?? ''
+type RouteContext = { params: Promise<{ path: string[] }> }
+
+async function proxyRequest(request: NextRequest, context: RouteContext) {
+  const { path } = await context.params
+  const joinedPath = Array.isArray(path) ? path.join('/') : ''
   const url = new URL(request.url)
-  const targetUrl = `${backendBaseUrl}/${path}${url.search}`
+  const targetUrl = `${backendBaseUrl}/${joinedPath}${url.search}`
 
   const headers = new Headers(request.headers)
   headers.delete('host')
@@ -44,31 +49,22 @@ async function proxyRequest(request: Request, params: { path?: string[] }) {
   }
 }
 
-export async function GET(request: Request, ctx: { params: { path?: string[] } }) {
-  return proxyRequest(request, ctx.params)
+export async function GET(request: NextRequest, context: RouteContext) {
+  return proxyRequest(request, context)
 }
 
-export async function POST(
-  request: Request,
-  ctx: { params: { path?: string[] } }
-) {
-  return proxyRequest(request, ctx.params)
+export async function POST(request: NextRequest, context: RouteContext) {
+  return proxyRequest(request, context)
 }
 
-export async function PUT(request: Request, ctx: { params: { path?: string[] } }) {
-  return proxyRequest(request, ctx.params)
+export async function PUT(request: NextRequest, context: RouteContext) {
+  return proxyRequest(request, context)
 }
 
-export async function PATCH(
-  request: Request,
-  ctx: { params: { path?: string[] } }
-) {
-  return proxyRequest(request, ctx.params)
+export async function PATCH(request: NextRequest, context: RouteContext) {
+  return proxyRequest(request, context)
 }
 
-export async function DELETE(
-  request: Request,
-  ctx: { params: { path?: string[] } }
-) {
-  return proxyRequest(request, ctx.params)
+export async function DELETE(request: NextRequest, context: RouteContext) {
+  return proxyRequest(request, context)
 }
